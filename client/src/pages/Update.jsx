@@ -1,9 +1,10 @@
 import axios from "axios";
 import { useEffect, useState } from "react"
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 export default function Update() {
   const params = useParams();
+  const navigate = useNavigate();
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
   const [contact, setContact] = useState({});
@@ -32,6 +33,7 @@ export default function Update() {
         
         setTimeout(() => {
           setMessage('');
+          navigate(`/more/${response.data.contact._id}`);
         }, 3000);
       }
     })

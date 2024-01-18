@@ -31,7 +31,6 @@ export default function Create() {
       setError(err);
       console.error(err);
     })
-    
   }
 
   const handleInputs = (e) => {
