@@ -1,27 +1,17 @@
 import { useEffect, useState } from "react"
 import ContactComponent from "../components/ContactComponent"
-// import axios from 'axios';
+import axios from 'axios';
 
 const Home = () => {
     const [contacts, setContacts] = useState([]);
 
     useEffect(() => {
-        fetch("http://localhost:3000/api/v1/contactapp/list", {
-          method: "GET",
+        axios.get("http://localhost:3000/api/v1/contactapp/list")
+        .then(response => {
+            setContacts(response.data.contacts);
         })
-          .then((response) => {
-            if (!response.ok) {
-              throw new Error(`HTTP error! status: ${response.status}`);
-            }
-            return response.json();
-          })
-          .then((data) => {
-            setContacts(data.contacts);
-            console.log(data);
-          })
-          .catch((error) => console.log(error));
-    }, []);
-    
+        .catch(err => { console.error(err);})
+    }, []); 
 
     return (
         <div className="w-ful flex flex-col justify-center items-center">
@@ -32,9 +22,9 @@ const Home = () => {
                 </div>
                 <div className="pt-10 flex flex-col justify-start items-start gap-4">
                     {contacts.length === 0 && <p>No contacts yet</p>}
-                    {contacts.length !== 0 && contacts.map(contact => {
-                        <ContactComponent key={contact._id} contact={contact}/>
-                    })}
+                    {contacts.map((contact, index) => (
+                        <ContactComponent key={index} contact={contact}/>
+                    ))}
                 </div>
             </div>
         </div>

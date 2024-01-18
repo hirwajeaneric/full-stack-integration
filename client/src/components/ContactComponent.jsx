@@ -1,5 +1,7 @@
+/* eslint-disable react/prop-types */
 
 const ContactComponent = (props) => {
+    // eslint-disable-next-line react/prop-types
     const { contact } = props;
 
     return (
