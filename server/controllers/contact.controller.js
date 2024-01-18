@@ -3,9 +3,13 @@ const ContactModel = require('../models/contact');
 
 const add = async (req, res, next) => {
     try {
-        const { fullName, email, phone } = req.body; 
-        const newContact = new ContactModel(fullName, email, phone);
-        var savedContact = await newContact.save();
+        console.log("Body data:");
+        console.log(req.body);
+
+        var savedContact = await ContactModel.create(req.body);
+        console.log("Saved contact:");
+        console.log(savedContact);
+        
         res.status(StatusCodes.CREATED).json({ message: 'Contact successfully added!', contact: savedContact });
     } catch (error) {
         res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: error });
@@ -64,6 +68,6 @@ const deleteContact = async (req, res, next) => {
 };
 
 
-module.export = {
+module.exports = {
     add, list, findById, findByPhone, updateContact, deleteContact
 }
