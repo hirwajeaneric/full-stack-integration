@@ -1,22 +1,26 @@
 import { useEffect, useState } from "react"
 import ContactComponent from "../components/ContactComponent"
-import axios from 'axios';
+// import axios from 'axios';
 
 const Home = () => {
     const [contacts, setContacts] = useState([]);
 
     useEffect(() => {
-        async function fetchContacts () {
-            try {
-                var response = await axios.get('http://localhost:3000/api/v1/contactapp/list');
-                console.log(response);   
-            } catch (error) {
-                console.log(error.message);
+        fetch("http://localhost:3000/api/v1/contactapp/list", {
+          method: "GET",
+        })
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error(`HTTP error! status: ${response.status}`);
             }
-        };
-
-        fetchContacts();
-    }, [])
+            return response.json();
+          })
+          .then((data) => {
+            setContacts(data.contacts);
+            console.log(data);
+          })
+          .catch((error) => console.log(error));
+    }, []);
     
 
     return (
