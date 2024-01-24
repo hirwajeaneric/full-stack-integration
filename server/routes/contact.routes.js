@@ -1,5 +1,5 @@
 const express = require('express');
-var contactRouter = express.Router();
+const contactRouter = express.Router();
 
 const { list, add, updateContact, findById, findByPhone, deleteContact  } = require('../controllers/contact.controller');
 

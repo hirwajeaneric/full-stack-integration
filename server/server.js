@@ -1,8 +1,8 @@
 require('dotenv').config();
 const express = require('express');
-const contactRouter = require('./routes/contact.routes');
 const mongoose = require('mongoose');
 const cors = require("cors");
+const allRouters = require('./routes');
 
 const app = express();
 app.use(express.json());
@@ -15,9 +15,11 @@ var corsOptions = {
 
 app.use(cors(corsOptions));
 
-app.use('/api/v1/contactapp/', contactRouter);
+app.use('/api/v1/contactapp/', allRouters);
 
-mongoose.connect(process.env.MONGO_URI)
+const MONGODB_URL = "mongodb+srv://hirwajeaneric25:Hakizimana123@cluster0.rlg8coj.mongodb.net/";
+
+mongoose.connect(MONGODB_URL)
 .then(() => {
     app.listen(3000, () => {
         console.log(`Server running on port 3000...`);
