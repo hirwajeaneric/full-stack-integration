@@ -1,18 +1,19 @@
 const { StatusCodes } = require('http-status-codes');
 const UserModel = require('../models/user');
+const bcryptjs = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 
 const signup = async (req, res, next) => {
     const { firstName, lastName, email, password } = req.body;
     try {
         var userExists = await UserModel.findOne({ email: email });
-        // console.log(userExists);
         if (userExists !== null) {
             res.status(StatusCodes.BAD_REQUEST).json({ error: "User with this email already exists" });
             return;
         }
 
         const hashedPassword = bcryptjs.hashSync(password, 10);
-        console.log(req.body);
+        console.log(hashedPassword);
 
         var newUser = new UserModel({
             firstName: firstName,
@@ -30,6 +31,7 @@ const signup = async (req, res, next) => {
         }
 
     } catch (error) {
+        console.log(error);
         res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: error });
     }
 };
@@ -41,7 +43,7 @@ const signin = async (req, res, next) => {
         if (!validUser) return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: "Invalid email or password!" });
 
         const validPassword = bcryptjs.compareSync(password, validUser.password);
-        if (!validUser) return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: "Invalid email or password!" });
+        if (!validPassword) return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: "Invalid email or password!" });
 
         const token = jwt.sign({ id: validUser._id }, process.env.JWT_SECRET_KEY);
 
@@ -56,6 +58,7 @@ const signin = async (req, res, next) => {
 
     } catch (error) {
         res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: error });
+        console.log(error);
     }
 };
 

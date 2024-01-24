@@ -7,6 +7,7 @@ import Update from './pages/Update.jsx';
 import Signup from './pages/authentication/Signup.jsx';
 import Signin from './pages/authentication/Signin.jsx';
 import MainPages from './pages/MainPages.jsx';
+import Account from './pages/Account.jsx';
 
 const App = () => {
 
@@ -25,6 +26,7 @@ const App = () => {
           <Route path='/add' element={<Create />} />
           <Route path='/update/:contactId' element={<Update />} />
           <Route path='/more/:contactId' element={<View />} />
+          <Route path='/account' element={<Account />} />
         </Route>
       </Routes>
     </Router>

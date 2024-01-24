@@ -17,7 +17,7 @@ export default function Create() {
     setError('');
     setMessage('');
 
-    axios.post(`http://localhost:3000/api/v1/contactapp/add`, contact)
+    axios.post(`http://localhost:3000/api/v1/contactapp/contact/add`, contact)
     .then(response => {
       if (response.status === 201) {
         setMessage(response.data.message);
