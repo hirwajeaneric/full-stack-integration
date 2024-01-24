@@ -6,48 +6,80 @@ import SuccessAlert from "../../components/SuccessAlert";
 import ErrorAlert from "../../components/ErrorAlert";
 
 const Signup = () => {
-    const [user, setUser] = useState({});
-
     const navigate = useNavigate();
 
     const [message, setMessage] = useState({
         title: "",
         description: ""
     });
+    
     const [error, setError] = useState({
         title: "",
         description: ""
     });
 
-    // Function to update 
-    const signIn = (e) => {
+    const [user, setUser] = useState({
+        firstName: '',
+        lastName: '',
+        email: '',
+        password: '',
+        confirmPassword: '',
+        marketingAccept: ''
+    });
+
+    const clearInputs = () => {
+        setUser({
+            firstName: '',
+            lastName: '',
+            email: '',
+            password: '',
+            confirmPassword: '',
+            marketingAccept: ''
+        })
+    } 
+
+    const handleInputs = (e) => {
+        setUser({ ...user, [e.target.name]: e.target.value })
+    }
+
+    const SignUp = (e) => {
         e.preventDefault();
-
-        setError({ title: "", description: "" });
-        setMessage({ title: "", description: "" });
-
-        const { confirmPassword, marketingAccept, ...rest } = user;
-
-        axios.post(`http://localhost:3000/api/v1/auth/signup`, rest)
-            .then(response => {
+        
+        if (user.firstName.length < 3) {
+            setError({
+                title: "Input error",
+                description: "The first name must be at least 3 characters"
+            });
+            return;
+        } else if (user.password !== user.confirmPassword) {
+            setError({
+                title: "Input error",
+                description: "Passwords do not match"
+            });
+            return;
+        } else {
+            const {confirmPassword, marketingAccept, ...rest  } = user;
+            axios.post('http://localhost:3000/api/v1/contactapp/auth/signup', rest)
+            .then((response) => {
                 if (response.status === 201) {
+                    
                     setMessage({
-                        title: 'Success',
+                        title: "Success",
                         description: response.data.message
                     });
 
-                    setTimeout(() => {
+                    setTimeout(() => { 
                         navigate('/signin');
-                    }, 3000);
-                }
+                    }, 3000)
+                } 
             })
-            .catch(err => {
-                setError({ title: 'Error', description: err });
+            .catch(error => {
+                setError({
+                    title: 'Error',
+                    description: error
+                })
             })
-    }
-
-    const handleInputs = (e) => {
-        setUser({ ...user, [e.target.name]: e.target.value });
+        }
     }
 
     return (
@@ -70,7 +102,7 @@ const Signup = () => {
                         {message.title && <SuccessAlert message={message} />}
 
                         {/* Error alert  */}
-                        {error.message && <ErrorAlert error={error} />}
+                        {error.title && <ErrorAlert error={error} />}
 
                         <a className="block text-blue-600 mt-5" href="/">
                             <span className="sr-only">Home</span>
@@ -96,7 +128,7 @@ const Signup = () => {
                             quibusdam aperiam voluptatum.
                         </p>
 
-                        <form action="#" className="mt-8 grid grid-cols-6 gap-6" onSubmit={signIn}>
+                        <form action="#" className="mt-8 grid grid-cols-6 gap-6" onSubmit={SignUp}>
                             <div className="col-span-6 sm:col-span-3">
                                 <label
                                     htmlFor="FirstName"
@@ -108,7 +140,8 @@ const Signup = () => {
                                 <input
                                     type="text"
                                     id="FirstName"
-                                    name="first_name"
+                                    name="firstName"
+                                    required
                                     value={user.firstName}
                                     onChange={handleInputs}
                                     className="mt-1 w-full p-3 rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200"
@@ -126,7 +159,7 @@ const Signup = () => {
                                 <input
                                     type="text"
                                     id="LastName"
-                                    name="last_name"
+                                    name="lastName"
                                     value={user.lastName}
                                     onChange={handleInputs}
                                     className="mt-1 w-full p-3 rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200"
@@ -177,7 +210,7 @@ const Signup = () => {
                                 <input
                                     type="password"
                                     id="PasswordConfirmation"
-                                    name="password_confirmation"
+                                    name="confirmPassword"
                                     value={user.confirmPassword}
                                     onChange={handleInputs}
                                     className="mt-1 w-full p-3 rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200"
@@ -189,7 +222,7 @@ const Signup = () => {
                                     <input
                                         type="checkbox"
                                         id="MarketingAccept"
-                                        name="marketing_accept"
+                                        name="marketingAccept"
                                         value={user.marketingAccept}
                                         onChange={handleInputs}
                                         className="h-5 w-5 p-3 rounded-md border-gray-200 bg-white shadow-sm dark:border-gray-700 dark:bg-gray-800 dark:focus:ring-offset-gray-900"

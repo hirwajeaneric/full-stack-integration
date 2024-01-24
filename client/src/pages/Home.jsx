@@ -9,11 +9,13 @@ const Home = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        axios.get("http://localhost:3000/api/v1/contactapp/list")
+        axios.get("http://localhost:3000/api/v1/contactapp/contact/list")
         .then(response => {
             setContacts(response.data.contacts);
         })
-        .catch(err => { console.error(err);})
+        .catch(err => { 
+            console.error(err) 
+        })
     }, []); 
 
     return (

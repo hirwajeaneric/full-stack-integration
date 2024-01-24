@@ -5,13 +5,14 @@ import { useNavigate, useParams } from "react-router-dom";
 export default function Update() {
   const params = useParams();
   const navigate = useNavigate();
+  
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
   const [contact, setContact] = useState({});
 
   // Fetch data
   useEffect(() => {
-    axios.get(`http://localhost:3000/api/v1/contactapp/findById?id=${params.contactId}`)
+    axios.get(`http://localhost:3000/api/v1/contactapp/update?id=${params.contactId}`)
       .then(response => {
         setContact(response.data.contact);
       })
