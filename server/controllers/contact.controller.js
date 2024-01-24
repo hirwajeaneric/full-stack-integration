@@ -29,7 +29,7 @@ const updateContact = async (req, res, next) => {
 const list = async (req, res, next) => {
     try {
         const listOfContacts = await ContactModel.find({});
-        res.status(StatusCodes.OK).json({ contacts: listOfContacts });
+        res.status(StatusCodes.OK).json({ contacts: listOfContacts});
     } catch (error) {
         res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: error });
     }

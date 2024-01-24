@@ -17,9 +17,7 @@ app.use(cors(corsOptions));
 
 app.use('/api/v1/contactapp/', allRouters);
 
-const MONGODB_URL = "mongodb+srv://hirwajeaneric25:Hakizimana123@cluster0.rlg8coj.mongodb.net/";
-
-mongoose.connect(MONGODB_URL)
+mongoose.connect(process.env.MONGO_URI)
 .then(() => {
     app.listen(3000, () => {
         console.log(`Server running on port 3000...`);
