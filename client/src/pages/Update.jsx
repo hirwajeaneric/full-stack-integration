@@ -12,7 +12,7 @@ export default function Update() {
 
   // Fetch data
   useEffect(() => {
-    axios.get(`http://localhost:3000/api/v1/contactapp/update?id=${params.contactId}`)
+    axios.get(`http://localhost:3000/api/v1/contactapp/contact/findById?id=${params.contactId}`)
       .then(response => {
         setContact(response.data.contact);
       })
@@ -26,7 +26,7 @@ export default function Update() {
     setError('');
     setMessage('');
 
-    axios.put(`http://localhost:3000/api/v1/contactapp/update?id=${params.contactId}`, contact)
+    axios.put(`http://localhost:3000/api/v1/contactapp/contact/update?id=${params.contactId}`, contact)
     .then(response => {
       if (response.status === 200) {
         setMessage(response.data.message);

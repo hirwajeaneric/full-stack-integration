@@ -11,7 +11,7 @@ const More = () => {
   const [contact, setContact] = useState({});
 
   useEffect(() => {
-    axios.get(`http://localhost:3000/api/v1/contactapp/findById?id=${params.contactId}`)
+    axios.get(`http://localhost:3000/api/v1/contactapp/contact/findById?id=${params.contactId}`)
       .then(response => {
           setContact(response.data.contact);
       })

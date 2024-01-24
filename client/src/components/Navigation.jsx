@@ -4,6 +4,13 @@ import { useEffect, useState } from "react";
 
 const Navigation = () => {
   const [userInfo, setUserInfo] = useState({});
+
+  const signOut = () => {
+    localStorage.removeItem('user');
+    localStorage.removeItem('token');
+    
+    window.location.replace('/signin');
+  };
   
   useEffect(() => {
     var user = JSON.parse(localStorage.getItem('user'));
@@ -21,6 +28,7 @@ const Navigation = () => {
                   <p className="text-white">{userInfo.fullName} {userInfo.lastName}</p>
                   <p className="text-white">{userInfo.email}</p>
                 </Link>
+                <button onClick={signOut} className="px-4 py-2 cursor-pointer bg-black text-white rounded-lg">Sign out</button>
             </div>
         </div>
     </nav>

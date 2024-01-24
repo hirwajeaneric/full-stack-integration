@@ -1,6 +1,5 @@
 import axios from "axios";
 import { useState } from "react"
-import { useNavigate } from "react-router-dom";
 import SuccessAlert from "../../components/SuccessAlert";
 import ErrorAlert from "../../components/ErrorAlert";
 
@@ -9,8 +8,6 @@ const Signin = () => {
         email: '',
         password: '',
     });
-
-    const navigate = useNavigate();
 
     const [message, setMessage] = useState({
         title: "",
