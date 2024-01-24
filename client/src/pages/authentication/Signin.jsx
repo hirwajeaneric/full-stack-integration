@@ -5,7 +5,10 @@ import SuccessAlert from "../../components/SuccessAlert";
 import ErrorAlert from "../../components/ErrorAlert";
 
 const Signin = () => {
-    const [user, setUser] = useState({});
+    const [user, setUser] = useState({
+        email: '',
+        password: '',
+    });
 
     const navigate = useNavigate();
 
@@ -13,6 +16,7 @@ const Signin = () => {
         title: "",
         description: ""
     });
+
     const [error, setError] = useState({
         title: "",
         description: ""
@@ -25,16 +29,19 @@ const Signin = () => {
         setError({ title: "", description: "" });
         setMessage({ title: "", description: "" });
 
-        axios.post(`http://localhost:3000/api/v1/auth/signin`, user)
+        axios.post(`http://localhost:3000/api/v1/contactapp/auth/signin`, user)
             .then(response => {
                 if (response.status === 200) {
                     setMessage({ title: 'Success', description: response.data.message });
 
+                    var localUserData = JSON.stringify(response.data.user);
+
                     localStorage.setItem('token', response.data.token);
-                    localStorage.setItem('user', response.data.user);
+                    localStorage.setItem('user', localUserData);
 
                     setTimeout(() => {
-                        navigate('/');
+                        // navigate('/');
+                        window.location.replace('/');
                     }, 3000);
                 }
             })
