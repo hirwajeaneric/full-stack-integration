@@ -1,0 +1,27 @@
+{
+  "name": "full-stack-integration",
+  "version": "1.0.0",
+  "description": "Full Stack application practical project to test a number of MERN Features and functionalities.",
+  "main": "index.js",
+  "scripts": {
+    "start":""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hirwajeaneric/full-stack-integration.git"
+  },
+  "keywords": [
+    "Express.js",
+    "React.js",
+    "Node.js",
+    "JavaScript",
+    "NPM",
+    "MongoDB"
+  ],
+  "author": "Hirwa Jean Eric",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/hirwajeaneric/full-stack-integration/issues"
+  },
+  "homepage": "https://github.com/hirwajeaneric/full-stack-integration#readme"
+}
